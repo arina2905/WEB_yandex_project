@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+   TABLE {
+    border-collapse: collapse; /* Убираем двойные линии между ячейками */
+     /* Ширина таблицы */
+   }
+   TH, TD {
+    border: 1px solid black; /* Параметры рамки */
+    text-align: center; /* Выравнивание по центру */
+    padding: 4px; /* Поля вокруг текста */
+    width: 25px;
+   }
+   TH {
+    background: #ff8c69; /* Цвет фона ячейки */
+    height: 40px; /* Высота ячеек */
+    vertical-align: bottom; /* Выравнивание по нижнему краю */
+    padding: 0; /* Убираем поля вокруг текста */
+   }
+  </style>
+</head>
+<body>
+<center><p>Животные</p>
+      <table>
+        {% for line in crosswords %}
+        <tr>
+            {% for cell in line %}
+                <td>
+                {% if cell != 0 %}
+                    <a class="btn btn-primary" href="/question" >{{ cell }}</a>
+                {% elif loop.last %}
+                    &nbsp;
+                {% endif %}
+                </td>
+            {% endfor %}
+        </tr>
+    {% endfor %}
+    </table>
+</center>
+</body>
+</html>
