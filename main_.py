@@ -84,10 +84,10 @@ def greeting():
     return render_template('greeting.html')
 
 
-# @app.route('/question')
-# def question(id_of_question):
-#     return render_template('enter_word.html', quest=cross.dictionary_words[str(id_of_question)][0],
-#                            checki=cross.dictionary_words[str(id_of_question)][1])
+@app.route('/question')
+def question():
+    return render_template('enter_word.html', quest=cross.dictionary_words[str('1')][0],
+                           checki=cross.dictionary_words[str('1')][1])
 
 
 if __name__ == '__main__':
