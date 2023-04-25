@@ -21,7 +21,6 @@ class Crosswords():
                 self.table.append(row)
             self.a = self.table[-1][0]
             self.table.pop()
-            self.tab = self.table.copy()
         print(self.table)
 
     def question_show(self):
@@ -32,11 +31,32 @@ class Crosswords():
                 self.dictionary_words[str(ind + 1)] = [word_rus, word_ose]
 
     def new_table(self):
+        print("table", self.table)
+        self.tab = [[' '] * 10 for i in range(10)]
+        for i in range(len(self.table)):
+            for j in range(len(self.table[i])):
+                #if self.tab[i][j].isalpha():
+                 #   self.tab[i][j] = '0'
+                if self.table[i][j].isdigit():
+                    self.tab[i][j] = self.table[i][j]
+                else:
+                    self.tab[i][j] = ' '
+        print("table", self.table)
+        print(self.tab)
+
+    def add_word(self, id_of_question):
+        print('add', len(id_of_question))
+        print(self.table)
         for i in range(len(self.tab)):
             for j in range(len(self.tab[i])):
-                if self.tab[i][j].isalpha():
-                    self.tab[i][j] = '0'
-                if self.tab[i][j].isdigit():
-                    self.tab[i][j] = int(self.tab[i][j])
+                #print(len(self.tab[i][j]))
+                if self.tab[i][j] == id_of_question:
+                    print(i, j)
+                    for k in range(len(self.dictionary_words[id_of_question][1])):
+
+                        self.tab[i][j + k + 1] = self.table[i][j + k + 1]
+                    break
+
+
 
 # open_file()

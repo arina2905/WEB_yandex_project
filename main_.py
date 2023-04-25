@@ -5,6 +5,7 @@ from data.user import User
 from flask_login import LoginManager, login_user, login_required, logout_user
 from data.forms import LoginForm
 from data.forms import RegForm
+from data.forms import Enter_Word
 from data.crosswords import Crosswords
 
 app = Flask(__name__)
@@ -84,10 +85,15 @@ def greeting():
     return render_template('greeting.html')
 
 
-@app.route('/question')
-def question():
-    return render_template('enter_word.html', quest=cross.dictionary_words[str('1')][0],
-                           checki=cross.dictionary_words[str('1')][1])
+@app.route('/question/<id_of_question>', methods=['GET', 'POST'])
+def question(id_of_question):
+    form = Enter_Word()
+    if form.is_submitted():
+        if form.word.data.lower().strip() == cross.dictionary_words[str(id_of_question)][1].lower().strip():
+            cross.add_word(id_of_question)
+            print(cross.tab)
+            return redirect('/index')
+    return render_template('enter_word.html', id=id_of_question, quest=cross.dictionary_words[str(id_of_question)][0], checki=cross.dictionary_words[str(id_of_question)][1], form=form)
 
 
 if __name__ == '__main__':

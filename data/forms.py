@@ -18,3 +18,7 @@ class RegForm(FlaskForm):
     password = PasswordField('Пароль', validators=[DataRequired()])
     submit = SubmitField('Зарегистрироваться')
     insubmit = SubmitField('Войти')
+
+class Enter_Word(FlaskForm):
+    word = StringField('Пишите по осетински')
+    submit = SubmitField('Проверить')

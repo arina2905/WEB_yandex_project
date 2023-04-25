@@ -5,11 +5,15 @@
     <title>En_Wo</title>
 </head>
 <body>
-Переведите на осетинский<br> {{quest}}<br>
-<input type="text" size="77">
-<button>check please
-    {% if input == ['checki'] %}
-        good
-    {% endif %}</button>
+    <form action="" method="post">
+
+<p>
+    {{ form.word.label }}<br>
+    {{ quest }}
+    {{ form.word(class="form-control") }}<br>
+</p>
+<p>{{ form.submit(type="submit", class="btn btn-primary") }}
+</p>
+    </form>
 </body>
 </html>
