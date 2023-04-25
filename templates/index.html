@@ -29,8 +29,8 @@
         <tr>
             {% for cell in line %}
                 <td>
-                {% if cell != 0 %}
-                    <a class="btn btn-primary" href="/question" >{{ cell }}</a>
+                {% if cell != ' ' %}
+                    <a class="btn btn-primary" href="/question/1" >{{ cell }}</a>
                 {% elif loop.last %}
                     &nbsp;
                 {% endif %}
