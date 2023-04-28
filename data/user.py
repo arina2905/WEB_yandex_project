@@ -11,6 +11,7 @@ class User(SqlAlchemyBase, UserMixin):
     name = sqlalchemy.Column(sqlalchemy.String)
     email = sqlalchemy.Column(sqlalchemy.String, index=True, unique=True)
     password = sqlalchemy.Column(sqlalchemy.String)
+    crossword = sqlalchemy.Column(sqlalchemy.String)
 
     def check_password(self, password):
         return password == self.password

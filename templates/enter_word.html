@@ -3,17 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <title>En_Wo</title>
+
+<script>
+     function insert_ae() {
+  document.getElementById("myinputfield").value += "æ";
+}
+</script>
 </head>
 <body>
+
     <form action="" method="post">
 
-<p>
-    {{ form.word.label }}<br>
-    {{ quest }}
-    {{ form.word(class="form-control") }}<br>
-</p>
-<p>{{ form.submit(type="submit", class="btn btn-primary") }}
-</p>
+    <p>
+        {{ form.word.label }}<br>
+        {{ quest }}
+    <p>
+         {{ form.word(class="form-control", id="myinputfield", value="") }}
+                 <button onclick="insert_ae()">æ</button>
+    </p>
+    <p>
+        {{ form.submit(type="submit", class="btn btn-primary") }}
+    </p>
+    <div>{{ message }}</div>
     </form>
 </body>
 </html>

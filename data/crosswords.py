@@ -21,7 +21,7 @@ class Crosswords():
                 self.table.append(row)
             self.a = self.table[-1][0]
             self.table.pop()
-        print(self.table)
+        #print(self.table)
 
     def question_show(self):
         with open(f'data/crosswords/{self.a}', encoding='utf-8') as file:
@@ -31,7 +31,7 @@ class Crosswords():
                 self.dictionary_words[str(ind + 1)] = [word_rus, word_ose]
 
     def new_table(self):
-        print("table", self.table)
+        #print("table", self.table)
         self.tab = [[' '] * 10 for i in range(10)]
         for i in range(len(self.table)):
             for j in range(len(self.table[i])):
@@ -41,8 +41,8 @@ class Crosswords():
                     self.tab[i][j] = self.table[i][j]
                 else:
                     self.tab[i][j] = ' '
-        print("table", self.table)
-        print(self.tab)
+        #print("table", self.table)
+        #print(self.tab)
 
     def add_word(self, id_of_question):
         print('add', len(id_of_question))

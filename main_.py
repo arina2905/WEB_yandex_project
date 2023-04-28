@@ -2,7 +2,7 @@
 from flask import Flask, redirect, render_template
 from data import db_session
 from data.user import User
-from flask_login import LoginManager, login_user, login_required, logout_user
+from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from data.forms import LoginForm
 from data.forms import RegForm
 from data.forms import Enter_Word
@@ -15,6 +15,7 @@ cross = Crosswords()
 cross.open_file()
 cross.new_table()
 cross.question_show()
+
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -69,11 +70,15 @@ def main():
     con = db_session.create_session()
 
 
-@login_manager.user_loader(id)
+'''@login_manager.user_loader(id)
+def load_user(user_id):
+    db_sess = db_session.create_session()
+    return db_sess.query(User).get(user_id)'''
+
+@login_manager.user_loader
 def load_user(user_id):
     db_sess = db_session.create_session()
     return db_sess.query(User).get(user_id)
-
 
 @app.route("/index")
 def index():
@@ -90,9 +95,15 @@ def question(id_of_question):
     form = Enter_Word()
     if form.is_submitted():
         if form.word.data.lower().strip() == cross.dictionary_words[str(id_of_question)][1].lower().strip():
+            if current_user.is_authenticated:
+                db_sess = db_session.create_session()
+                current_user.crossword = '1'
+                db_sess.commit()
             cross.add_word(id_of_question)
-            print(cross.tab)
+            #print(cross.tab)
             return redirect('/index')
+        else:
+            return render_template('enter_word.html', quest=cross.dictionary_words[str(id_of_question)][0], message='Неправильно введенное слово', form=form)
     return render_template('enter_word.html', id=id_of_question, quest=cross.dictionary_words[str(id_of_question)][0], checki=cross.dictionary_words[str(id_of_question)][1], form=form)
 
 
