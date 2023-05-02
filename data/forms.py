@@ -20,5 +20,5 @@ class RegForm(FlaskForm):
     insubmit = SubmitField('Войти')
 
 class Enter_Word(FlaskForm):
-    word = StringField('Пишите по осетински')
+    word = StringField('Напишите по осетински')
     submit = SubmitField('Проверить')

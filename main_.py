@@ -16,7 +16,6 @@ cross.open_file()
 cross.new_table()
 cross.question_show()
 
-
 login_manager = LoginManager()
 login_manager.init_app(app)
 
@@ -31,10 +30,13 @@ def login():
         user = db_sess.query(User).filter(User.email == form.email.data).first()
         if user and user.check_password(form.password.data):
             login_user(user, remember=form.remember_me.data)
+            cross.new_table()
+            cross.old_table(current_user.crossword)
             return redirect("/index")
         return render_template('login.html',
                                message="Неправильный логин или пароль",
                                form=form)
+
     return render_template('login.html', title='Авторизация', form=form)
 
 
@@ -82,29 +84,36 @@ def load_user(user_id):
 
 @app.route("/index")
 def index():
-    return render_template('index.html', title='Crossword', crosswords=cross.tab)
+
+    return render_template('crossword.html', title='Crossword', crosswords=cross.tab)
 
 
 @app.route('/')
 def greeting():
-    return render_template('greeting.html')
+    return render_template('index.html')
 
 
 @app.route('/question/<id_of_question>', methods=['GET', 'POST'])
 def question(id_of_question):
     form = Enter_Word()
+    user = current_user
     if form.is_submitted():
         if form.word.data.lower().strip() == cross.dictionary_words[str(id_of_question)][1].lower().strip():
             if current_user.is_authenticated:
                 db_sess = db_session.create_session()
-                current_user.crossword = '1'
+                if user.crossword is None:
+                    user.crossword = ""
+                user.crossword += f'{id_of_question}'
+                db_sess.merge(user)
                 db_sess.commit()
+                print(user.crossword, user.id, 'dfghj')
+
             cross.add_word(id_of_question)
             #print(cross.tab)
             return redirect('/index')
         else:
             return render_template('enter_word.html', quest=cross.dictionary_words[str(id_of_question)][0], message='Неправильно введенное слово', form=form)
-    return render_template('enter_word.html', id=id_of_question, quest=cross.dictionary_words[str(id_of_question)][0], checki=cross.dictionary_words[str(id_of_question)][1], form=form)
+    return render_template('enter_word.html', id=id_of_question, quest=cross.dictionary_words[str(id_of_question)][0], form=form)
 
 
 if __name__ == '__main__':
