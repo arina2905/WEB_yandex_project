@@ -28,9 +28,10 @@
     </style>
 </head>
 <body>
-{% if current_user.is_authenticated %}
+<center>{% if current_user.is_authenticated %}
     <button type="button" class="btn btn-outline-info"><a class="navbar-brand" href="/logout">{{ current_user.name }}</a></button>
 {% endif %}
+</center>
 <center><p>Животные</p>
     <table>
         {% for line in crosswords %}
